@@ -38,7 +38,7 @@ export default function App() {
                   className={`cell ${cell.isRevealed ? 'revealed' : ''} ${cell.isFlagged ? 'flagged' : ''}`}
                   onClick={() => handleClick(row, col)}
                   onContextMenu={(e) => handleRightClick(e, row, col)}
-                  disabled={gameState.status !== 'playing'}
+                  disabled={gameState.status !== 0}
                 >
                   {cell.isFlagged && !cell.isRevealed && '🚩'}
                   {cell.isRevealed && cell.isMine && '💣'}

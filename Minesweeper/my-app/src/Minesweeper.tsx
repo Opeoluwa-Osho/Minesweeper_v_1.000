@@ -1,5 +1,11 @@
 
-export type GameStatus = 'playing' | 'won' | 'lost';
+// export type GameStatus = 'playing' | 'won' | 'lost';
+
+export enum GameStatus {
+  playing = 0,
+  won = 1,
+  lost = 2
+}
 
 export  class Cell {
     public isMine: boolean = false;
@@ -178,7 +184,7 @@ export class GameBoard {
 }
 
 export class MinesweeperGame {
-  private status: GameStatus = 'playing';
+  private status: GameStatus = 0;
   private startTime: number = Date.now();
   private endTime: number = Date.now();
 
@@ -187,22 +193,22 @@ export class MinesweeperGame {
   ) {}
 
   public revealCell(row: number, col: number): void {
-    if (this.status !== 'playing') return;
+    if (this.status !== 0) return;
 
     const success = this.board.revealCell(row, col);
 
     if (!success) {
-      this.status = 'lost';
+      this.status = 2;
       this.endTime = Date.now();
       this.board.revealAllMines();
     } else if (this.board.checkWin()) {
-      this.status = 'won';
+      this.status = 1;
       this.endTime = Date.now();
     }
   }
 
   public toggleFlag(row: number, col: number): void {
-    if (this.status === 'playing') {
+    if (this.status === 0) {
       this.board.toggleFlag(row, col);
     }
   }
@@ -212,9 +218,9 @@ export class MinesweeperGame {
   }
 
   public get isGameOver(): boolean {
-    return this.status !== 'playing';
+    return this.status !== 0;
   }
-public get elapsedTime(): number {
-  return Math.floor(((this.endTime || Date.now()) - this.startTime) / 1000);
-}
+//   public get elapsedTime(): number {
+//     return Math.floor(((this.endTime || Date.now()) - this.startTime) / 1000);
+//   }
 }
